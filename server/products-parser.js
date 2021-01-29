@@ -1,43 +1,6 @@
 const csv = require('csv-parser');
-const createCsvWriter = require('csv-writer').createObjectCsvWriter;
-const fastcsv = require('fast-csv');
 const fs = require('fs');
-const mysql = require('mysql');
-const {config} = require('../config.js');
 const _ = require('underscore');
-const converter = require('json-2-csv');
-
-const csvWriter = createCsvWriter({
-  path: '/Users/co-star/Documents/clean-product.csv',
-  header: [
-    {id: 'id', title: 'id'},
-    {id: 'name', title: 'name'},
-    {id: 'slogan', title: 'slogan'},
-    {id: 'description', title: 'description'},
-    {id: 'category', title: 'category'},
-    {id: 'default_price', title: 'default_price'},
-  ]
-});
-
-
-// const connection = mysql.createConnection({
-//   host: 'localhost',
-//   user: 'root',
-//   password: config.password,
-//   database: 'products'
-// });
-
-// connection.connect((err) => {
-//   if (err) {
-//     return console.log('error: ', err);
-//   } else {
-//     console.log('Connected to MySQL!')
-//   }
-// });
-
-const ws = fs.createWriteStream('/Users/co-star/Documents/clean-product.csv');
-
-
 
 fs.createReadStream('/Users/co-star/Downloads/product.csv')
   .pipe(csv())
@@ -60,9 +23,9 @@ fs.createReadStream('/Users/co-star/Downloads/product.csv')
     let slogan = _.escape(row.slogan);
     let description = _.escape(row.description);
     let category = _.escape(row.category);
-    let insertRow = `${id},'${name}','${slogan}','${description}','${category}',${defaultPrice} \n`;
+    let insertRow = `${id},"${name}","${slogan}","${description}","${category}",${defaultPrice} \n`;
       if (fs.existsSync('/Users/co-star/Documents/clean-product.csv')) {
-          fs.appendFile('/Users/co-star/Documents/clean-product.csv', insertRow, (err) => {
+          fs.appendFileSync('/Users/co-star/Documents/clean-product.csv', insertRow, (err) => {
             if (err) {
               throw err;
             }
@@ -76,22 +39,7 @@ fs.createReadStream('/Users/co-star/Downloads/product.csv')
           });
           console.log(id);
       }
-      
-      //id,name,slogan,description,category,default_price
-      // .pipe(ws)
-    // connection.query(`INSERT INTO Products(id,name,slogan,description,category,default_price)
-    //     VALUES(${id},'${name}','${slogan}','${description}','${category}',${defaultPrice})`, (err, result) => {
-    //       if (err) {
-    //         console.log(err);
-    //       } else {
-    //         console.log(result);
-    //       }
-    //     });
-
   })
-  // .pipe(csvWriter.writeRecords({
-  //   'id':id, 'name':`'${name}'`, 'slogan':`'${slogan}'`, 'description':`'${description}'`, 'category':`'${category}'`, 'default_price':default_price
-  // }, {headers:true}).then((res) => {console.log(res, 'hi')}))
   .on('end', () => {
     console.log('CSV file successfully processed');
   });

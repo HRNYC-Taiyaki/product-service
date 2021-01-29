@@ -42,7 +42,6 @@ CREATE TABLE IF NOT EXISTS `RelatedProducts` (
 );
 
 ALTER TABLE `RelatedProducts` ADD FOREIGN KEY (product_id) REFERENCES `Products` (`id`);
-ALTER TABLE `RelatedProducts` ADD FOREIGN KEY (related_id) REFERENCES `Products` (`id`);
 
 
 CREATE TABLE IF NOT EXISTS `Product_Styles` (
