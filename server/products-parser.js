@@ -20,24 +20,23 @@ const csvWriter = createCsvWriter({
 });
 
 
-const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: config.password,
-  database: 'products'
-});
+// const connection = mysql.createConnection({
+//   host: 'localhost',
+//   user: 'root',
+//   password: config.password,
+//   database: 'products'
+// });
 
-connection.connect((err) => {
-  if (err) {
-    return console.log('error: ', err);
-  } else {
-    console.log('Connected to MySQL!')
-  }
-});
+// connection.connect((err) => {
+//   if (err) {
+//     return console.log('error: ', err);
+//   } else {
+//     console.log('Connected to MySQL!')
+//   }
+// });
 
 const ws = fs.createWriteStream('/Users/co-star/Documents/clean-product.csv');
 
-let storage = [];
 
 
 fs.createReadStream('/Users/co-star/Downloads/product.csv')
@@ -61,28 +60,22 @@ fs.createReadStream('/Users/co-star/Downloads/product.csv')
     let slogan = _.escape(row.slogan);
     let description = _.escape(row.description);
     let category = _.escape(row.category);
-    let insertRow = `${id},${name}',${slogan}',${description}',${category}', ${defaultPrice} \n`;
-    if (storage.length > 200) {
-      storage.push(insertRow);
+    let insertRow = `${id},'${name}','${slogan}','${description}','${category}',${defaultPrice} \n`;
       if (fs.existsSync('/Users/co-star/Documents/clean-product.csv')) {
-        storage.forEach(item => {
-          fs.appendFile('/Users/co-star/Documents/clean-product.csv', item, (err) => {
+          fs.appendFile('/Users/co-star/Documents/clean-product.csv', insertRow, (err) => {
             if (err) {
               throw err;
             }
-          })
-        });
+          });
+          console.log(id);
       } else {
-        storage.forEach(item => {
-          fs.writeFileSync('/Users/co-star/Documents/clean-product.csv', item, (err) => {
+          fs.writeFileSync('/Users/co-star/Documents/clean-product.csv', insertRow, (err) => {
             if (err) {
               throw err;
             }
-          })
-        });
+          });
+          console.log(id);
       }
-      storage = [];
-    }
       
       //id,name,slogan,description,category,default_price
       // .pipe(ws)
