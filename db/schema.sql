@@ -24,15 +24,21 @@ ALTER TABLE `Styles` ADD FOREIGN KEY (product_id) REFERENCES `Products` (`id`);
 
 CREATE TABLE IF NOT EXISTS `Features` (
   `id` integer primary key auto_increment,
+  `product_id` integer,
   `feature` varchar(1000),
   `value` varchar(1000)
 );
 
+ALTER TABLE `Features` ADD FOREIGN KEY (product_id) REFERENCES `Products` (`id`);
+
 CREATE TABLE IF NOT EXISTS `Photos` (
   `id` integer primary key auto_increment,
-  `thumbnail_url` varchar(1000),
-  `url` varchar(1000)
+  `style_id` integer,
+  `url` varchar(1000),
+  `thumbnail_url` varchar(1000)
 );
+
+ALTER TABLE `Photos` ADD FOREIGN KEY (style_id) REFERENCES `Styles` (`id`);
 
 
 CREATE TABLE IF NOT EXISTS `RelatedProducts` (
@@ -65,9 +71,8 @@ ALTER TABLE `Product_Features` ADD FOREIGN KEY (feature_id) REFERENCES `Features
 CREATE TABLE IF NOT EXISTS `Style_Skus` (
   `id` integer primary key auto_increment,
   `style_id` integer,
-  `sku_id` varchar(1000),
-  `quantity` integer,
-  `size` varchar(10)
+  `size` varchar(10),
+  `quantity` integer
 );
 
-ALTER TABLE `Style_Skus` ADD FOREIGN KEY (style_id) REFERENCES `Products` (`id`);
+ALTER TABLE `Style_Skus` ADD FOREIGN KEY (style_id) REFERENCES `Styles` (`id`);
