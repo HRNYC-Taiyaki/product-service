@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const { config } = require('../config.js');
-const productRoutes = require('./routes/productRoutes.ts');
+const productRoutes = require('./routes/productRoutes.js');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 let PORT = process.env.PORT || 3001;
