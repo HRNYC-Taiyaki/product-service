@@ -5,7 +5,10 @@ const productRoutes = require('./routes/productRoutes.ts');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 
-
+app.use(function(req:any, res:any, next:any) {
+    res.header("Access-Control-Allow-Origin", "*");
+    next();
+  });
 app.use(morgan('combined'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use('/', productRoutes);
