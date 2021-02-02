@@ -24,7 +24,7 @@ module.exports = {
                     } else {
                         output.results.forEach((i:any) => {
                             if (!Array.isArray(i.photos)) { i.photos = [] }   
-                            i.default_style.data === 49 ? i.default_style = true : i.default_style = false;                       
+                            i.default_style.data === 1 ? i.default_style = true : i.default_style = false;                       
                             res.forEach((j:any) => {
                                 if (i.id === j.style_id) {
                                     i.photos.push({
@@ -34,7 +34,25 @@ module.exports = {
                                 }
                             });
                         });
-                        resolve(output); 
+                        sqlDb.query(`SELECT * FROM Style_Skus USE INDEX (idx_skus_style_id) WHERE style_id = ${styleIdString}`, (err:any, res:any, fields:any) => {
+                            if (err) {
+                                console.log(err);
+                                reject(err);
+                            } else {
+                                output.results.forEach((i:any) => {
+                                    if (!Array.isArray(i.skus)) { i.skus = {} }                      
+                                    res.forEach((j:any) => {
+                                        if (i.id === j.style_id) {
+                                            i.skus[j.id] = {
+                                                quantity: j.quantity,
+                                                size: j.size
+                                            };
+                                        }
+                                    });
+                                });
+                                resolve(output); 
+                            }
+                        });
                     }
                 })
             }
