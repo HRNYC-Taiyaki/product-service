@@ -1,6 +1,6 @@
 import { exampleStyle } from './../types/exampleStyle';
 import { SkusObj, Result, Style, PhotosObj } from './../types/types';
-const sqlDb = require('../../db/index.ts');
+const sqlDb = require('../../db/index');
 
 module.exports = {
     getStyles: (id: number) => {

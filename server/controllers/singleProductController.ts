@@ -1,4 +1,4 @@
-const singleProductModel = require('../models/singleProductModel.ts');
+const singleProductModel = require('../models/singleProductModel');
 
 module.exports = {
     getSingleProduct: async (req: any, res: any) => {  

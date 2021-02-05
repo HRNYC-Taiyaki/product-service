@@ -1,6 +1,6 @@
 import { ProductType, Featured, Feature} from './../types/types';
 const exampleProduct = require('./../types/exampleFeatured');
-const sqlDb = require('../../db/index.ts');
+const sqlDb = require('../../db/index');
 
 module.exports = {
   getProductInfo: (id: number) => {

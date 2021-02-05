@@ -1,5 +1,5 @@
 import { ProductType } from './../types/types';
-const sqlDb = require('../../db/index.ts');
+const sqlDb = require('../../db/index');
 
 module.exports = {
   getNProducts: (page = 0, n = 5) => {

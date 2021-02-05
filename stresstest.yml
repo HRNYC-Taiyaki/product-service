@@ -1,0 +1,35 @@
+config:
+  target: "http://127.0.0.1:3001"
+  phases:
+    - duration: 60
+      arrivalRate: 5
+      name: Warm up
+    - duration: 60
+      arrivalRate: 100
+      name: BLAST
+scenarios:
+  # We define one scenario:
+  - name: "Products -> Single Product -> Styles Query"
+    flow:
+      - get:
+          url: "/products"
+      # Get the details of the product:
+      # - loop:
+      - get:
+          url: "/products/197"
+              #  url: "/products/{{ $loopElement }}"
+        # over:
+        #   - 123
+        #   - 45657
+        #   - 789921
+      # Pause for 3 seconds:
+      - think: 3
+      # Add product to cart:
+      # - loop:
+      - get:
+          url: "/products/100029/styles"
+              #  url: "/products/{{ $loopElement }}/styles"
+        # over:
+        #   - 321
+        #   - 75654
+        #   - 129980

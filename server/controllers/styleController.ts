@@ -1,4 +1,4 @@
-const styleModel = require('../models/styleModel.ts');
+const styleModel = require('../models/styleModel');
 
 module.exports = {
     getStyles: async (req: any, res: any) => {  
