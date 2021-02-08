@@ -24,20 +24,19 @@ fs.createReadStream('/Users/co-star/Downloads/product.csv')
     let description = _.escape(row.description);
     let category = _.escape(row.category);
     let insertRow = `${id},"${name}","${slogan}","${description}","${category}",${defaultPrice} \n`;
+
       if (fs.existsSync('/Users/co-star/Documents/clean-product.csv')) {
           fs.appendFileSync('/Users/co-star/Documents/clean-product.csv', insertRow, (err) => {
             if (err) {
               throw err;
             }
           });
-          console.log(id);
       } else {
           fs.writeFileSync('/Users/co-star/Documents/clean-product.csv', insertRow, (err) => {
             if (err) {
               throw err;
             }
           });
-          console.log(id);
       }
   })
   .on('end', () => {
